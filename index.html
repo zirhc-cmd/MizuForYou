@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kisah Kita</title>
+  <link rel="stylesheet" href="index.css">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <h1>Chris &amp; Micha</h1>
+    <p>Bersama  22 Agustus 2024</p>
+    <p>Berakhir 16 Januari 2026</p>
+  </header>
+
+  <section class="counter">
+    <div>
+      <div class="time-box"><span id="years">0</span><br></div>
+      <div class="time-box"><span id="months">0</span><br></div>
+      <div class="time-box"><span id="days">0</span><br></div>
+      <div class="time-box"><span id="hours">0</span><br></div>
+      <div class="time-box"><span id="minutes">0</span><br></div>
+      <div class="time-box"><span id="seconds">0</span><br></div>
+    </div>
+  </section>
+
+  <section class="quote">
+    "Cinta bukan hanya tentang berapa lama bersama, tapi tentang sejauh mana kita saling menjaga."
+  </section>
+
+  <section>
+    <div class="gallery">
+      <img src="./Image/1.jpeg" alt="Foto 1">
+      <img src="./Image/2.jpeg" alt="Foto 2">
+      <img src="./Image/3.jpeg" alt="Foto 3">
+      <img src="./Image/4.jpeg" alt="Foto 4">
+      <img src="./Image/5.jpeg" alt="Foto 5">
+      <img src="./Image/6.jpeg" alt="Foto 6">
+    </div>
+  </section>
+
+  <footer>
+    Dibuat dengan ❤️ untuk kita berdua.
+  </footer>
+
+  <!-- Musik -->
+  <audio id="bgMusic" loop>
+    <source src="./Music/Sheila On 7 - Tunjukkan Padaku (Official Audio).mp3" type="audio/mpeg">
+  </audio>
+  <button id="musicBtn">▶️</button>
+
+  <script>
+    // Hitung durasi hubungan
+    const startDate = new Date("2024-08-22T00:00:00");
+    function updateCounter(){
+      const now = new Date();
+      let y = now.getFullYear() - startDate.getFullYear();
+      let m = now.getMonth() - startDate.getMonth();
+      let d = now.getDate() - startDate.getDate();
+      let hh = now.getHours() - startDate.getHours();
+      let mm = now.getMinutes() - startDate.getMinutes();
+      let ss = now.getSeconds() - startDate.getSeconds();
+
+      if(ss < 0){ ss += 60; mm--; }
+      if(mm < 0){ mm += 60; hh--; }
+      if(hh < 0){ hh += 24; d--; }
+      if(d < 0){
+        m--; 
+        const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+        d += prevMonth;
+      }
+      if(m < 0){ m += 12; y--; }
+
+      document.getElementById("years").textContent = y;
+      document.getElementById("months").textContent = m;
+      document.getElementById("days").textContent = d;
+      document.getElementById("hours").textContent = hh;
+      document.getElementById("minutes").textContent = mm;
+      document.getElementById("seconds").textContent = ss;
+    }
+    setInterval(updateCounter, 1000);
+
+    // Musik
+    const music = document.getElementById('bgMusic');
+    const btn = document.getElementById('musicBtn');
+    let playing = false;
+    btn.addEventListener('click', () => {
+      if(!playing){ music.play(); btn.textContent = '⏸️'; playing = true; }
+      else { music.pause(); btn.textContent = '▶️'; playing = false; }
+    });
+
+    // Efek love jatuh
+    function createLove() {
+      const love = document.createElement('div');
+      love.classList.add('love');
+      love.innerHTML = '❤️';
+      love.style.left = Math.random() * window.innerWidth + 'px';
+      love.style.animationDuration = (2 + Math.random() * 3) + 's'; // 2s-5s
+      document.body.appendChild(love);
+      setTimeout(() => { love.remove(); }, 5000);
+    }
+    setInterval(createLove, 500);
+  </script>
+</body>
+</html>
